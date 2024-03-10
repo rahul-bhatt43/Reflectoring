@@ -72,11 +72,22 @@ const resolvers = {
       return comment;
     },
     deleteComment: async (parent, { commentId }) => {
-      const comment = await Comment.findByIdAndDelete(commentId);
-      if (!comment) {
-        throw new Error(`Comment with ID ${commentId} not found`);
+      try {
+        const comment = await Comment.findByIdAndDelete(commentId);
+
+        if (!comment) {
+          throw new Error(`Comment with ID ${commentId} not found`);
+        }
+
+        await Post.findByIdAndUpdate(comment.post, {
+          $pull: { comments: commentId },
+        });
+
+        return comment;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to delete comment");
       }
-      return comment;
     },
     createComment: async (parent, { postId, content, author }) => {
       console.log('Creating comment:', { postId, content, author });
