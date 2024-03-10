@@ -78,7 +78,7 @@ mutation Mutation($deleteId: ID ) {
 ///
 
 # commenting
-mutation Mutation($postId: String, $content: String, $author: String) {
+mutation Mutation($postId: ID, $content: String, $author: String) {
   createComment(postId: $postId, content: $content, author: $author) {
     id
     content

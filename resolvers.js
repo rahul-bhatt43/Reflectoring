@@ -1,3 +1,4 @@
+const { Comment } = require("./models/Comment.js");
 const { Post } = require("./models/Post.js");
 
 const resolvers = {
@@ -71,11 +72,39 @@ const resolvers = {
       return comment;
     },
     deleteComment: async (parent, { commentId }) => {
-      const comment = await Comment.findByIdAndDelete(commentId);
-      if (!comment) {
-        throw new Error(`Comment with ID ${commentId} not found`);
+      try {
+        const comment = await Comment.findByIdAndDelete(commentId);
+
+        if (!comment) {
+          throw new Error(`Comment with ID ${commentId} not found`);
+        }
+
+        await Post.findByIdAndUpdate(comment.post, {
+          $pull: { comments: commentId },
+        });
+
+        return comment;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to delete comment");
       }
-      return comment;
+    },
+    createComment: async (parent, { postId, content, author }) => {
+      console.log('Creating comment:', { postId, content, author });
+      const post = await Post.findById(postId);
+      if (!post) {
+        throw new Error(`Post with ID ${postId} not found`);
+      }
+      const newComment = new Comment({
+        content,
+        author,
+        post: postId,
+      });
+      await newComment.save();
+      post.comments.push(newComment._id);
+      await post.save();
+      console.log('Comment created successfully');
+      return newComment;
     },
   },
 };
