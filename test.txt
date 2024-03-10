@@ -1,0 +1,83 @@
+mutation Mutation($firstName: String, $lastName: String, $age: Int){
+  create(firstName: $firstName, lastName: $lastName, age: $age) {
+    id
+    firstName
+    lastName
+    age
+  }
+}
+
+{
+  "firstName": "Karan",
+  "lastName": "Sharma",
+  "age":20
+}
+
+
+///
+
+query Students {
+  students {
+    id
+    firstName
+    lastName
+    age
+  }
+}
+
+
+///
+
+query Students($studentId: ID ) {
+  student(id: $studentId) {
+    id
+    firstName
+    lastName
+    age
+  }
+}
+
+{
+  "studentId":"65ec8934572694ac4a4338a8"
+}
+
+///
+
+mutation Mutation($updateId: ID,$firstName: String, $lastName: String, $age: Int){
+  update(id: $updateId, firstName: $firstName, lastName: $lastName, age: $age) {
+    id
+    firstName
+    lastName
+    age
+  }
+}
+
+{
+  "updateId":"65ec8945572694ac4a4338aa",
+  "firstName": "Raja",
+  "lastName": "Bhatt",
+  "age":20
+}
+
+///
+
+mutation Mutation($deleteId: ID ) {
+  delete(id: $deleteId) {
+    id
+    firstName
+    lastName
+    age
+  }
+}
+
+{
+  "deleteId":"65ec8945572694ac4a4338aa"
+}
+
+///
+
+query Querry{
+  students {
+    firstName
+  }
+}
