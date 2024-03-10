@@ -1,83 +1,93 @@
-mutation Mutation($firstName: String, $lastName: String, $age: Int){
-  create(firstName: $firstName, lastName: $lastName, age: $age) {
+// create
+
+mutation Mutation($title: String, $content: String, $author: String) {
+  createPost(title: $title, content: $content, author: $author) {
     id
-    firstName
-    lastName
-    age
+    title
+    content
+    author
   }
 }
 
 {
-  "firstName": "Karan",
-  "lastName": "Sharma",
-  "age":20
+  "title":  "The lastest",
+  "content": "This latets content though",
+  "author": "Rahul Snow"
 }
 
 
 ///
 
-query Students {
-  students {
+query Posts {
+  posts {
     id
-    firstName
-    lastName
-    age
+    title
+    content
+    author
   }
-}
-
-
-///
-
-query Students($studentId: ID ) {
-  student(id: $studentId) {
-    id
-    firstName
-    lastName
-    age
-  }
-}
-
-{
-  "studentId":"65ec8934572694ac4a4338a8"
 }
 
 ///
 
-mutation Mutation($updateId: ID,$firstName: String, $lastName: String, $age: Int){
-  update(id: $updateId, firstName: $firstName, lastName: $lastName, age: $age) {
+query Posts($postId: ID ) {
+  post(id: $postId) {
     id
-    firstName
-    lastName
-    age
+    title
+    content
+    author
   }
 }
 
 {
-  "updateId":"65ec8945572694ac4a4338aa",
-  "firstName": "Raja",
-  "lastName": "Bhatt",
-  "age":20
+  "postId":"65ed4eec86a6b96649530692"
+}
+
+///
+
+mutation Mutation($updateId: ID,$title: String, $content: String, $author: String){
+  updatePost(id: $updateId, title: $title, content: $content, author: $author) {
+    id
+    title
+    content
+    author
+  }
+}
+
+{
+  "updateId":"65ed4eec86a6b96649530692",
+  "title":  "New Post updated",
+  "content": "This is the content updated.",
+  "author": "John Doe updated"
 }
 
 ///
 
 mutation Mutation($deleteId: ID ) {
-  delete(id: $deleteId) {
+  deletePost(id: $deleteId) {
     id
-    firstName
-    lastName
-    age
+    title
+    content
+    author
   }
 }
 
 {
-  "deleteId":"65ec8945572694ac4a4338aa"
+  "deleteId":"65ed505386a6b9664953069a"
 }
 
 ///
 
-query Querry{
-  students {
-    firstName
+# commenting
+mutation Mutation($postId: String, $content: String, $author: String) {
+  createComment(postId: $postId, content: $content, author: $author) {
+    id
+    content
+    author
   }
+}
+
+{
+  "postId":  "65ed567867acbe8286c854d2",
+  "content": " What a comment though!! 🤖",
+  "author": "Raju Snow"
 }
