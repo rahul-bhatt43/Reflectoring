@@ -5,7 +5,10 @@ const PostSchema = new mongoose.Schema({
   content: String,
   author: String,
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0, // Set a default value to ensure it's always a number
+  },
   tags: [String],
 });
 
